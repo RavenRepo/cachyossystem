@@ -14,26 +14,30 @@ This repository documents and automates a **professional CachyOS developer works
 It is designed around:
 
 - CachyOS / Arch Linux
-- GNOME
+- GNOME + Orchis-Dark / Papirus-Dark / Bibata cursor theme
+- GNOME Shell extensions (dash-to-dock, blur-my-shell, Vitals, user-theme, gsconnect, tilingshell, just-perfection)
+- Ghostty (+ Ptyxis, Alacritty)
+- fish with CachyOS defaults
 - Git + GitHub
 - Node.js, npm, pnpm, Bun
 - Python + pipx
-- PostgreSQL
+- PostgreSQL + sqlite3
 - Podman
 - Playwright
-- VS Code + Zed
-- Chrome + Zen + Brave
-- Claude Code, Codex, Kiro CLI, Pi, OpenCode, Herdr
-- Oh My Pi / Oh My Claude / Oh My Codex
+- Postman
+- Zed (VS Code optional)
+- Firefox + Chrome + Zen + Brave
+- Claude Code, Codex, Kiro CLI, Pi, OpenCode, Herdr, Hermes
+- Oh My Pi / Oh My Claude / Oh My Codex (oh-my-claude-sisyphus via npm)
 - Tailscale
 - Caddy
 - Proton VPN
-- OBS Studio + Kooha
+- Kooha (+ OBS Studio optional) + KTorrent
 - Obsidian
 - Thunderbird
 - Telegram Desktop
-- KTorrent
 - SSHFS
+- Modern CLIs: bat, eza, btop, fastfetch, duf, ripgrep, fd, fzf
 - UFW and additional system hardening
 
 The goal is **repeatability without blindly copying a personal machine configuration**.
@@ -118,7 +122,8 @@ cachyos-dev-workstation/
 │   ├── 09-security.md
 │   ├── 10-productivity-media.md
 │   ├── 11-verification.md
-│   └── 12-maintenance.md
+│   ├── 12-maintenance.md
+│   └── 13-terminals.md
 ├── scripts/
 │   ├── 00-system-update.sh
 │   ├── 01-base-packages.sh
@@ -183,8 +188,7 @@ bash scripts/verify.sh
 | 01 | Git, build tools, shell and common utilities |
 | 02 | Node, Bun, pnpm, Python, PostgreSQL, Podman, Playwright |
 | 03 | AI coding agents and agent runtimes |
-| 04 | Browsers, editors, VPN, productivity and media |
-| 05 | Security review and audit |
+| 04 | Browsers, editors, terminals, themes, VPN, productivity and media |
 | Verify | Validate the installation |
 
 ---
@@ -215,7 +219,13 @@ sudo pacman -S --needed \
   rsync \
   openssh \
   man-db \
-  man-pages
+  man-pages \
+  bat \
+  eza \
+  btop \
+  fastfetch \
+  duf \
+  sqlite3
 ```
 
 Install the AUR helper used by this setup:
@@ -230,6 +240,10 @@ Verify:
 git --version
 yay --version
 curl --version
+rg --version
+bat --version
+eza --version
+sqlite3 --version
 ```
 
 ---
@@ -252,6 +266,19 @@ Change the login shell if desired:
 
 ```bash
 chsh -s /usr/bin/fish
+```
+
+CachyOS ships tested fish defaults. Source them instead of reinventing:
+
+```fish
+source /usr/share/cachyos-fish-config/cachyos-config.fish
+```
+
+This workstation disables the greeting (and its fastfetch block):
+
+```fish
+function fish_greeting
+end
 ```
 
 Log out and back in.
@@ -288,6 +315,17 @@ Verify:
 gnome-shell --version
 gnome-extensions version
 ```
+
+## Themes, extensions, terminals
+
+This workstation uses Orchis-Dark (GTK/shell), Papirus-Dark (icons),
+Bibata-Modern-Classic (cursor), Adwaita Sans 11, purple accent; see
+`docs/03-gnome.md` for the exact packages, `gsettings` commands, and the
+reproducible extension list (dash-to-dock, blur-my-shell, Vitals,
+user-theme, gsconnect, CoverflowAltTab, tilingshell, just-perfection).
+
+Ghostty is the primary terminal (Ptyxis and Alacritty as alternatives);
+see `docs/13-terminals.md`. GNOME Terminal is intentionally not installed.
 
 Recommended philosophy:
 
@@ -594,6 +632,18 @@ Verify:
 zeditor --version
 ```
 
+## API clients
+
+```bash
+yay -S --needed postman-bin
+```
+
+Verify with the real binary name:
+
+```bash
+command -v postman
+```
+
 ---
 
 # 17. Browsers
@@ -609,10 +659,13 @@ yay -S --needed \
 
 Verify:
 
+Firefox ships with CachyOS GNOME. Verify with the real binary names:
+
 ```bash
-google-chrome --version
+google-chrome-stable --version
 zen-browser --version
-brave-browser --version
+brave --version
+firefox --version
 ```
 
 Keep browser profiles separate from the configuration repository.
@@ -715,6 +768,13 @@ herdr integration install hermes
 ```
 
 Only install integrations you actually use.
+
+Observed on this workstation (2026-09): `claude` 2.1.268, `codex` 0.153.4,
+`kiro-cli` 2.21.2, `pi` 0.85.1, `herdr` 0.9.0 (all `~/.local/bin` via
+upstream installers), `opencode` 1.18.29 (pacman), `omp` 18.1.17
+(`~/.bun/bin/omp` via Bun), plus `hermes`/`hermes-acp`/`hermes-agent`.
+npm global: `oh-my-claude-sisyphus`. Agent state (`~/.claude/`,
+`~/.codex/config.toml`) stays out of Git. Details: `docs/05-ai-tooling.md`.
 
 ---
 
@@ -1493,8 +1553,8 @@ The following should remain deliberate:
 
 # 40. Roadmap
 
-- [ ] Finish baseline GNOME configuration
-- [ ] Add reproducible GNOME extension list
+- [x] Baseline GNOME configuration (Orchis-Dark / Papirus-Dark / Bibata, `docs/03-gnome.md`)
+- [x] Reproducible GNOME extension list (`docs/03-gnome.md`)
 - [ ] Add Caddy templates
 - [ ] Add rootless Podman Quadlet examples
 - [ ] Add systemd user SSHFS examples

@@ -3,6 +3,10 @@ set -euo pipefail
 
 sudo pacman -S --needed \
   gnome-keyring \
+  ghostty ptyxis alacritty \
+  orchis-theme papirus-icon-theme papirus-folders bibata-cursor-theme-bin \
+  extension-manager \
+  ttf-jetbrains-mono-nerd \
   obsidian \
   thunderbird \
   telegram-desktop \
@@ -18,3 +22,4 @@ echo
 echo "Optional AUR applications:"
 echo "  yay -S google-chrome zen-browser-bin brave-bin"
 echo "  yay -S visual-studio-code-bin"
+echo "  yay -S postman-bin"

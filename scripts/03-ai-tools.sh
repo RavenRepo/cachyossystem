@@ -10,5 +10,5 @@ curl -fsSL https://opencode.ai/install | bash
 curl -fsSL https://herdr.dev/install.sh | sh
 
 echo
-echo "Codex/Pi/Oh-My-* integrations are intentionally not automated here."
-echo "Authenticate and configure them interactively."
+echo "Codex/Pi/omp follow their official installers (here: ~/.local/bin, omp via Bun)."
+echo "opencode is also available via pacman; authenticate and configure everything interactively."

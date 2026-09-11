@@ -19,6 +19,8 @@ corepack enable
 curl -fsSL https://bun.sh/install | bash
 ```
 
+Bun also provides the `omp` CLI on this workstation (`~/.bun/bin/omp`).
+
 ## Python
 
 ```bash
@@ -47,4 +49,16 @@ Inside a project:
 ```bash
 pnpm add -D playwright
 pnpm exec playwright install
+```
+
+## API clients
+
+```bash
+yay -S --needed postman-bin
+```
+
+Verify:
+
+```bash
+command -v postman
 ```
