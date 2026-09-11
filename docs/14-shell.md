@@ -42,6 +42,37 @@ oh-my-zsh, sources the p10k theme (line 88), and sources `~/.p10k.zsh` if it
 exists (line 101). Because it only sets `plugins` when empty, you can override
 the plugin list by assigning `plugins=(...)` *before* sourcing it.
 
+It also sources three plugins **directly**, outside the oh-my-zsh `plugins`
+array:
+
+```zsh
+# lines 91, 92, 95 of cachyos-config.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+```
+
+This matters when reading the config: those three are active even though they
+do not appear in `$plugins`, so do not add them to the array as well or they
+will load twice. `zsh-completions` needs no `source` line at all — it installs
+into `/usr/share/zsh/site-functions`, which `compinit` picks up automatically.
+
+Confirm what is actually loaded rather than assuming:
+
+```bash
+env -i HOME="$HOME" USER="$USER" TERM=xterm /usr/bin/zsh -ic '
+  echo "ZSH=$ZSH"; echo "plugins=$plugins"
+  echo "syntax-highlighting loaded: $(( ${+ZSH_HIGHLIGHT_VERSION} ))"
+  echo "autosuggestions loaded:     $(( ${+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE} ))"'
+```
+
+## What belongs in `~/.zshrc` and what does not
+
+Keep `~/.zshrc` minimal. Everything oh-my-zsh-related is supplied by the
+package; the only things that belong in your own rc file are machine-specific:
+PATH, tool hooks, aliases, and the secrets source. Anything you are tempted to
+add that duplicates `cachyos-config.zsh` is a future merge conflict.
+
 ## The PATH trap
 
 **This is the one thing that will break a naive shell switch.**
