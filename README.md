@@ -4,7 +4,7 @@
 
 ![CachyOS](https://img.shields.io/badge/OS-CachyOS-1793D1?logo=archlinux&logoColor=white)
 ![Desktop](https://img.shields.io/badge/Desktop-GNOME-4A86CF?logo=gnome&logoColor=white)
-![Shell](https://img.shields.io/badge/Shell-fish-4EAA25?logo=fish&logoColor=white)
+![Shell](https://img.shields.io/badge/Shell-zsh%20%2B%20oh--my--zsh-4EAA25?logo=zsh&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 ## What this repository does
@@ -17,7 +17,7 @@ It is designed around:
 - GNOME + Orchis-Dark / Papirus-Dark / Bibata cursor theme
 - GNOME Shell extensions (dash-to-dock, blur-my-shell, Vitals, user-theme, gsconnect, tilingshell, just-perfection)
 - Ghostty (+ Ptyxis, Alacritty)
-- fish with CachyOS defaults
+- zsh + oh-my-zsh + Powerlevel10k (CachyOS system packaging), fish retained as fallback
 - Git + GitHub
 - Node.js, npm, pnpm, Bun
 - Python + pipx
@@ -37,7 +37,10 @@ It is designed around:
 - Thunderbird
 - Telegram Desktop
 - SSHFS
-- Modern CLIs: bat, eza, btop, fastfetch, duf, ripgrep, fd, fzf
+- Modern CLIs: bat, eza, btop, fastfetch, duf, ripgrep, fd, fzf, delta, lazygit, zoxide, go-yq
+- Terminal workflow: neovim, tmux, mosh (for Tailscale SSH sessions)
+- Runtime management: mise (Node/Python versions), uv (Python projects)
+- Encrypted secrets: age + sops
 - UFW and additional system hardening
 
 The goal is **repeatability without blindly copying a personal machine configuration**.
@@ -123,7 +126,9 @@ cachyos-dev-workstation/
 │   ├── 10-productivity-media.md
 │   ├── 11-verification.md
 │   ├── 12-maintenance.md
-│   └── 13-terminals.md
+│   ├── 13-terminals.md
+│   ├── 14-shell.md
+│   └── 15-cli-tooling.md
 ├── scripts/
 │   ├── 00-system-update.sh
 │   ├── 01-base-packages.sh
@@ -131,6 +136,7 @@ cachyos-dev-workstation/
 │   ├── 03-ai-tools.sh
 │   ├── 04-applications.sh
 │   ├── 05-security-audit.sh
+│   ├── 06-cli-tooling.sh
 │   └── verify.sh
 └── .github/
     └── workflows/
@@ -173,6 +179,7 @@ bash scripts/02-development.sh
 bash scripts/03-ai-tools.sh
 bash scripts/04-applications.sh
 bash scripts/05-security-audit.sh
+bash scripts/06-cli-tooling.sh
 bash scripts/verify.sh
 ```
 
@@ -185,10 +192,12 @@ bash scripts/verify.sh
 | Phase | Purpose |
 |---|---|
 | 00 | System update and baseline |
-| 01 | Git, build tools, shell and common utilities |
+| 01 | Git, build tools, shell (zsh stack + fish fallback) and common utilities |
 | 02 | Node, Bun, pnpm, Python, PostgreSQL, Podman, Playwright |
 | 03 | AI coding agents and agent runtimes |
 | 04 | Browsers, editors, terminals, themes, VPN, productivity and media |
+| 05 | Security audit helpers |
+| 06 | Terminal editor, multiplexer, git tooling, runtime managers, secrets tooling |
 | Verify | Validate the installation |
 
 ---
@@ -250,40 +259,84 @@ sqlite3 --version
 
 # 6. Shell
 
-This workstation uses **fish** as the primary interactive shell.
+This workstation uses **zsh with oh-my-zsh and Powerlevel10k** as the primary
+interactive shell. fish is retained as a fallback.
+
+Full detail, including the migration procedure and the PATH trap described
+below, is in `docs/14-shell.md`.
 
 ```bash
-sudo pacman -S --needed fish
+sudo pacman -S --needed \
+  zsh oh-my-zsh-git cachyos-zsh-config zsh-theme-powerlevel10k \
+  zsh-autosuggestions zsh-completions zsh-syntax-highlighting \
+  zsh-history-substring-search
 ```
 
-Check:
+All of these are in official CachyOS/`extra` repositories. The AUR is not
+needed.
+
+## How this differs from a normal oh-my-zsh install
+
+CachyOS packages oh-my-zsh **system-wide at `/usr/share/oh-my-zsh`**, not
+`~/.oh-my-zsh`, and pacman owns updates.
 
 ```bash
-fish --version
+source /usr/share/cachyos-zsh-config/cachyos-config.zsh
 ```
 
-Change the login shell if desired:
+That single line provides the Powerlevel10k instant prompt, `ZSH=/usr/share/oh-my-zsh`,
+`plugins=(git fzf extract)`, oh-my-zsh itself, and the p10k theme. Do not clone
+oh-my-zsh into `$HOME` on top of it, and do not run `upgrade_oh_my_zsh`. Custom
+plugins belong in `$ZSH_CUSTOM`.
+
+## Before changing your login shell
+
+A clean zsh login does **not** inherit `~/.local/bin` or `~/.bun/bin`. fish gets
+them from `fish_add_path` in `cachyos-config.fish`; the CachyOS zsh config has no
+equivalent. Since the AI agent CLIs live in `~/.local/bin` and `bun`/`omp` live
+in `~/.bun/bin`, running `chsh` without fixing PATH first removes the entire
+agent toolchain from your shell.
+
+This is invisible when testing from an existing session, because a child shell
+inherits the parent's PATH. Test with a scrubbed environment instead:
 
 ```bash
-chsh -s /usr/bin/fish
+env -i HOME="$HOME" USER="$USER" TERM=xterm /usr/bin/zsh -ic 'print -l $path'
 ```
 
-CachyOS ships tested fish defaults. Source them instead of reinventing:
+Add the PATH block from `docs/14-shell.md` to `~/.zshrc` **above** the
+`source` line, then:
 
-```fish
-source /usr/share/cachyos-fish-config/cachyos-config.fish
-```
-
-This workstation disables the greeting (and its fastfetch block):
-
-```fish
-function fish_greeting
-end
+```bash
+exec zsh -l
+p10k configure
+bash scripts/verify.sh
+chsh -s /usr/bin/zsh     # only after the above passes
 ```
 
 Log out and back in.
 
-If you use Zsh instead, do not blindly mix shell initialization from this guide with a Powerlevel10k or CachyOS-generated configuration. Keep shell configuration modular.
+## fish (fallback)
+
+```bash
+sudo pacman -S --needed fish cachyos-fish-config
+```
+
+```fish
+source /usr/share/cachyos-fish-config/cachyos-config.fish
+
+# disables the greeting and its fastfetch block
+function fish_greeting
+end
+```
+
+Reverting is `chsh -s /usr/bin/fish`. Keep `~/.config/fish/config.fish` in
+place so the fallback stays usable.
+
+Note that fish is not POSIX-compatible, so the `export VAR=...` lines that
+upstream `curl | bash` installers append to `~/.zshrc` and `~/.bashrc` have no
+effect in fish and must be rewritten by hand. That is the main practical reason
+this workstation prefers zsh.
 
 ---
 
@@ -427,17 +480,10 @@ Verify:
 pnpm --version
 ```
 
-Enable the package manager where supported:
-
-```bash
-corepack enable
-```
-
-Check:
-
-```bash
-corepack --version
-```
+`corepack` is a **separate** `extra` package — it is not bundled with `nodejs`
+or `npm` on Arch, and it is not installed by this setup. Standalone `pnpm` needs
+no `corepack enable` step. Install the `corepack` package explicitly only if a
+project requires it.
 
 ---
 
@@ -1027,18 +1073,31 @@ Install:
 sudo pacman -S --needed caddy
 ```
 
-Enable:
+Verify the binary before starting anything:
+
+```bash
+caddy version
+```
+
+Read the packaged configuration **before** enabling the unit, because enabling
+it starts a listener you have not reviewed:
+
+```bash
+cat /etc/caddy/Caddyfile
+caddy validate --config /etc/caddy/Caddyfile
+```
+
+Once your own configuration is in place:
 
 ```bash
 sudo systemctl enable --now caddy
-```
-
-Verify:
-
-```bash
 systemctl status caddy --no-pager
-caddy version
+sudo ss -lntp | grep caddy
 ```
+
+Confirm the bind address in that last command. `127.0.0.1` or a Tailscale
+address is what you want for development; `0.0.0.0` means the machine is
+serving the network.
 
 Start with local services.
 
@@ -1314,21 +1373,30 @@ tokens.json
 
 Use:
 
-- environment variables
-- `~/.config`
-- `~/.local/share`
+- environment variables loaded from a `600`-mode file outside Git
+- `age` + `sops` for secrets that must be versioned
 - GNOME Keyring
 - application credential stores
 - password managers
 - secret managers
 
-Example:
+The machine-local pattern this workstation uses:
 
 ```bash
-export OPENAI_API_KEY="..."
+mkdir -p ~/.config/secrets && chmod 700 ~/.config/secrets
+install -m 600 /dev/null ~/.config/secrets/env
+# put `export SOME_API_KEY="..."` in that file, then in ~/.zshrc:
+[[ -r "$HOME/.config/secrets/env" ]] && source "$HOME/.config/secrets/env"
 ```
 
-Do not put the actual value in `.bashrc`, `.config/fish/config.fish`, or Git unless the file is intentionally encrypted and managed as a secret.
+Do **not** assign credentials inline in `.bashrc`, `.zshrc`, or
+`.config/fish/config.fish`. Those files are mode `644` by default, they end up
+in dotfiles repositories, and the value leaks into `~/.bash_history` as well.
+`scripts/verify.sh` fails the build if it finds an inline `export *KEY=`,
+`*TOKEN=`, or `*SECRET=` in a shell rc file.
+
+Anything that has ever been in a shell rc file, a history file, or a Git object
+must be rotated, not merely deleted. Full procedure in `docs/09-security.md`.
 
 ---
 
@@ -1555,13 +1623,19 @@ The following should remain deliberate:
 
 - [x] Baseline GNOME configuration (Orchis-Dark / Papirus-Dark / Bibata, `docs/03-gnome.md`)
 - [x] Reproducible GNOME extension list (`docs/03-gnome.md`)
+- [x] zsh + oh-my-zsh migration with the PATH trap documented (`docs/14-shell.md`)
+- [x] CLI tooling phase with verified package names (`docs/15-cli-tooling.md`)
+- [x] Machine-local secrets pattern + `age`/`sops` workflow (`docs/09-security.md`)
+- [x] `verify.sh` rewritten to detect repo/system drift instead of masking it
 - [ ] Add Caddy templates
 - [ ] Add rootless Podman Quadlet examples
 - [ ] Add systemd user SSHFS examples
 - [ ] Add hardened sysctl profile
 - [ ] Add security audit script
-- [ ] Add workstation backup strategy
-- [ ] Add dotfiles repository integration
+- [ ] Add workstation backup strategy (`restic` repository + systemd timer)
+- [ ] Add dotfiles repository integration (`stow` layout)
+- [ ] Decide on shared shell history (`atuin`) across zsh and fish
+- [ ] Pick a password-manager CLI and wire `sops` to it
 - [ ] Add optional NVIDIA/Wayland tuning
 - [ ] Add developer project bootstrap scripts
 - [ ] Add CI for Markdown/link validation
