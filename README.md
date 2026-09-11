@@ -1,11 +1,45 @@
+<div align="center">
+
+<img src="assets/cachyos.svg" width="96" alt="CachyOS logo">
+
 # CachyOS Developer Workstation
 
-> A reproducible, security-conscious developer workstation setup for **CachyOS + GNOME** with modern web development, AI coding agents, containers, databases, remote access, media tools, and everyday productivity software.
+**A reproducible, security-conscious developer workstation for CachyOS + GNOME.**
 
-![CachyOS](https://img.shields.io/badge/OS-CachyOS-1793D1?logo=archlinux&logoColor=white)
-![Desktop](https://img.shields.io/badge/Desktop-GNOME-4A86CF?logo=gnome&logoColor=white)
-![Shell](https://img.shields.io/badge/Shell-zsh%20%2B%20oh--my--zsh-4EAA25?logo=zsh&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+Modern web development, AI coding agents, containers, databases, remote access,
+media tools and everyday productivity — documented, scripted and verifiable.
+
+<br>
+
+<!-- platform -->
+![CachyOS](https://img.shields.io/badge/OS-CachyOS-1793D1?style=for-the-badge&logo=archlinux&logoColor=white)
+![GNOME](https://img.shields.io/badge/GNOME-50.4-4A86CF?style=for-the-badge&logo=gnome&logoColor=white)
+![Wayland](https://img.shields.io/badge/Wayland-native-FFBC00?style=for-the-badge&logo=wayland&logoColor=black)
+![Catppuccin](https://img.shields.io/badge/Theme-Catppuccin_Mocha-CBA6F7?style=for-the-badge&logo=catppuccin&logoColor=white)
+
+<!-- toolchain -->
+![zsh](https://img.shields.io/badge/zsh-oh--my--zsh-4EAA25?logo=zsh&logoColor=white)
+![Ghostty](https://img.shields.io/badge/Terminal-Ghostty-1D1D1D?logo=gnometerminal&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-LTS-5FA04E?logo=nodedotjs&logoColor=white)
+![Bun](https://img.shields.io/badge/Bun-latest-FBF0DF?logo=bun&logoColor=black)
+![Python](https://img.shields.io/badge/Python-uv%20%2B%20pipx-3776AB?logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)
+![Podman](https://img.shields.io/badge/Podman-rootless-892CA0?logo=podman&logoColor=white)
+![Neovim](https://img.shields.io/badge/Neovim-tmux-57A143?logo=neovim&logoColor=white)
+
+<!-- services + meta -->
+![Tailscale](https://img.shields.io/badge/Tailscale-mesh_VPN-242424?logo=tailscale&logoColor=white)
+![Caddy](https://img.shields.io/badge/Caddy-reverse_proxy-1F88C0?logo=caddy&logoColor=white)
+![UFW](https://img.shields.io/badge/UFW-default_deny-E95420?logo=ubuntu&logoColor=white)
+![sops](https://img.shields.io/badge/secrets-age%20%2B%20sops-000000?logo=gnuprivacyguard&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-22C55E?logo=opensourceinitiative&logoColor=white)
+![Maintained](https://img.shields.io/badge/status-actively_maintained-22C55E)
+
+<sub>Verified against GNOME Shell 50.4 on Wayland · last audit 2026-09-11</sub>
+
+</div>
+
+---
 
 ## What this repository does
 
@@ -14,7 +48,7 @@ This repository documents and automates a **professional CachyOS developer works
 It is designed around:
 
 - CachyOS / Arch Linux
-- GNOME + Orchis-Dark / Papirus-Dark / Bibata cursor theme
+- GNOME + Catppuccin Mocha (Colloid GTK3/GTK4, Tela-circle icons, Bibata cursor)
 - GNOME Shell extensions (dash-to-dock, blur-my-shell, Vitals, user-theme, gsconnect, tilingshell, just-perfection)
 - Ghostty (+ Ptyxis, Alacritty)
 - zsh + oh-my-zsh + Powerlevel10k (CachyOS system packaging), fish retained as fallback
@@ -137,13 +171,37 @@ cachyos-dev-workstation/
 │   ├── 04-applications.sh
 │   ├── 05-security-audit.sh
 │   ├── 06-cli-tooling.sh
+│   ├── 07-gnome-theming.sh
 │   └── verify.sh
+├── assets/
+│   └── cachyos.svg
 └── .github/
     └── workflows/
         └── markdown.yml
 ```
 
 The scripts are intentionally separated. You can execute the documentation manually or use the scripts as a starting point.
+
+## Documentation index
+
+| | Document | Covers |
+|:--:|---|---|
+| 🗺️ | [00-overview](docs/00-overview.md) | Scope and design goals |
+| 💽 | [01-installation](docs/01-installation.md) | Clean CachyOS install |
+| 🧱 | [02-base-system](docs/02-base-system.md) | Base packages, build tools |
+| 🎨 | [03-gnome](docs/03-gnome.md) | GNOME, Catppuccin theming, extensions |
+| 🛠️ | [04-development](docs/04-development.md) | Languages and runtimes |
+| 🤖 | [05-ai-tooling](docs/05-ai-tooling.md) | AI coding agents and MCP |
+| 🌐 | [06-browsers-editors](docs/06-browsers-editors.md) | Browsers, Zed, VS Code |
+| 🗄️ | [07-databases-containers](docs/07-databases-containers.md) | PostgreSQL, Podman |
+| 🔗 | [08-networking](docs/08-networking.md) | Tailscale, Caddy, SSHFS |
+| 🔐 | [09-security](docs/09-security.md) | UFW, SSH hardening, `age`/`sops` |
+| 📦 | [10-productivity-media](docs/10-productivity-media.md) | Obsidian, OBS, Kooha |
+| ✅ | [11-verification](docs/11-verification.md) | Drift detection |
+| 🔄 | [12-maintenance](docs/12-maintenance.md) | Updates and upkeep |
+| 🖥️ | [13-terminals](docs/13-terminals.md) | Ghostty, Ptyxis, Alacritty |
+| 🐚 | [14-shell](docs/14-shell.md) | zsh + oh-my-zsh, the PATH trap |
+| ⚡ | [15-cli-tooling](docs/15-cli-tooling.md) | Modern CLI replacements |
 
 ---
 
@@ -166,8 +224,8 @@ CachyOS provides multiple desktop environments through its current installer, in
 ## Clone this repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cachyos-dev-workstation.git
-cd cachyos-dev-workstation
+git clone https://github.com/RavenRepo/cachyossystem.git
+cd cachyossystem
 ```
 
 ## Run the phases
@@ -180,6 +238,7 @@ bash scripts/03-ai-tools.sh
 bash scripts/04-applications.sh
 bash scripts/05-security-audit.sh
 bash scripts/06-cli-tooling.sh
+bash scripts/07-gnome-theming.sh
 bash scripts/verify.sh
 ```
 
@@ -198,6 +257,7 @@ bash scripts/verify.sh
 | 04 | Browsers, editors, terminals, themes, VPN, productivity and media |
 | 05 | Security audit helpers |
 | 06 | Terminal editor, multiplexer, git tooling, runtime managers, secrets tooling |
+| 07 | GNOME theming (Catppuccin Mocha, GTK3 + GTK4, icons, panel) — no root |
 | Verify | Validate the installation |
 
 ---
@@ -371,11 +431,33 @@ gnome-extensions version
 
 ## Themes, extensions, terminals
 
-This workstation uses Orchis-Dark (GTK/shell), Papirus-Dark (icons),
-Bibata-Modern-Classic (cursor), Adwaita Sans 11, purple accent; see
-`docs/03-gnome.md` for the exact packages, `gsettings` commands, and the
-reproducible extension list (dash-to-dock, blur-my-shell, Vitals,
-user-theme, gsconnect, CoverflowAltTab, tilingshell, just-perfection).
+This workstation uses **Catppuccin Mocha**: `Colloid-Purple-Dark-Catppuccin`
+for GTK3 *and* GTK4/libadwaita, `Tela-circle-purple-dark` icons,
+`Bibata-Modern-Ice` cursor, Adwaita Sans 11, purple accent, stock shell theme
+with a rounded blurred panel.
+
+```bash
+bash scripts/07-gnome-theming.sh    # no root required
+```
+
+Two things that trip up most GNOME theming guides:
+
+- **Nothing in GNOME Tweaks themes GTK4/libadwaita apps.** "Legacy
+  Applications" sets the GTK3 theme only. GTK4 is themed exclusively by
+  `~/.config/gtk-4.0/gtk.css`, which is why the theme is built from source with
+  vinceliuice's `-l` flag rather than installed from the AUR.
+- **Open Bar does not support GNOME 50.** Panel styling here goes through Blur
+  My Shell's `corner-radius` key instead. Always check an extension against the
+  extensions.gnome.org API before installing.
+
+`adw-gtk3-dark` is the documented fallback if the custom theme becomes a
+maintenance burden — it matches both toolkits, honours the native accent
+colour, and survives GNOME upgrades untouched.
+
+Full detail, verified findings and rollback snapshots: `docs/03-gnome.md`.
+The reproducible extension list (dash-to-dock, blur-my-shell, Vitals,
+user-theme, gsconnect, CoverflowAltTab, tilingshell, just-perfection) is in the
+same document.
 
 Ghostty is the primary terminal (Ptyxis and Alacritty as alternatives);
 see `docs/13-terminals.md`. GNOME Terminal is intentionally not installed.
@@ -387,6 +469,7 @@ Recommended philosophy:
 - avoid extensions that duplicate core GNOME functionality
 - remove abandoned extensions
 - review extension compatibility after GNOME upgrades
+- snapshot `dconf dump /org/gnome/` before any theming change
 
 ---
 
@@ -1621,7 +1704,9 @@ The following should remain deliberate:
 
 # 40. Roadmap
 
-- [x] Baseline GNOME configuration (Orchis-Dark / Papirus-Dark / Bibata, `docs/03-gnome.md`)
+- [x] Baseline GNOME configuration (Catppuccin Mocha: Colloid GTK3+GTK4 / Tela-circle / Bibata, `docs/03-gnome.md`)
+- [x] GTK4/libadwaita theming solved via `~/.config/gtk-4.0/gtk.css` (`docs/03-gnome.md`)
+- [x] Root-free, idempotent theming phase (`scripts/07-gnome-theming.sh`)
 - [x] Reproducible GNOME extension list (`docs/03-gnome.md`)
 - [x] zsh + oh-my-zsh migration with the PATH trap documented (`docs/14-shell.md`)
 - [x] CLI tooling phase with verified package names (`docs/15-cli-tooling.md`)
@@ -1637,6 +1722,9 @@ The following should remain deliberate:
 - [ ] Decide on shared shell history (`atuin`) across zsh and fish
 - [ ] Pick a password-manager CLI and wire `sops` to it
 - [ ] Add optional NVIDIA/Wayland tuning
+- [ ] Replace the local `sassc` extraction with `pacman -S sassc libsass`
+- [ ] Decide on floating panel (`--tweaks float`) vs current rounded panel
+- [ ] Install `refine` for GNOME settings not exposed in Settings/Tweaks
 - [ ] Add developer project bootstrap scripts
 - [ ] Add CI for Markdown/link validation
 
@@ -1662,11 +1750,21 @@ MIT. See [LICENSE](LICENSE).
 
 ---
 
+<div align="center">
+
 ## Maintainer
 
-Replace this section with your GitHub profile and preferred contact information.
+**Amit Kumar**
 
-```text
-Maintainer: YOUR NAME
-GitHub: https://github.com/YOUR_USERNAME
-```
+[![GitHub](https://img.shields.io/badge/GitHub-RavenRepo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/RavenRepo)
+
+<sub>Issues and pull requests welcome. Please do not include machine-specific
+credentials, hostnames or Tailscale keys in reports.</sub>
+
+<br>
+
+<sub>Built on <a href="https://cachyos.org/">CachyOS</a> · themed with
+<a href="https://github.com/catppuccin">Catppuccin</a> ·
+themes by <a href="https://github.com/vinceliuice">vinceliuice</a></sub>
+
+</div>
