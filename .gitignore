@@ -1,0 +1,57 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account.json
+tokens.json
+
+# SSH
+.ssh/
+id_rsa
+id_ed25519
+*.pub
+
+# Personal application data
+.local/
+personal/
+private/
+secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+.yarn/
+.pnpm-store/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+coverage/
+.cache/
+
+# Logs
+*.log
+
+# Local machine state
+machine-specific/
