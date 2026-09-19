@@ -6,8 +6,8 @@
 sudo pacman -S --needed nodejs npm
 ```
 
-The repository `nodejs` package tracks the current release (v26 at time of
-writing), which is **not** an LTS version. Do not fight pacman over this — use
+The repository `nodejs` package tracks the current release (v26.8.2 observed
+2026-09-19), which is **not** an LTS version. Do not fight pacman over this — use
 `mise` for per-project versions:
 
 ```bash
@@ -65,6 +65,8 @@ sudo pacman -S --needed postgresql
 sudo -u postgres initdb -D /var/lib/postgres/data
 sudo systemctl enable --now postgresql
 ```
+
+Observed 2026-09-19: `psql` 18.6, service `enabled` + `active`.
 
 ## Podman
 

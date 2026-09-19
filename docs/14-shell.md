@@ -94,9 +94,10 @@ produces only:
 ```
 
 No `~/.local/bin` and no `~/.bun/bin`. Since `claude`, `codex`, `kiro-cli`,
-`pi`, and `herdr` all live in `~/.local/bin`, and `bun` and `omp` live in
-`~/.bun/bin`, running `chsh -s /usr/bin/zsh` without fixing PATH first removes
-the entire AI toolchain from the shell.
+`pi`, `herdr`, and `antigravity` all live in `~/.local/bin`, `bun` and `omp`
+live in `~/.bun/bin`, and `opencode` v2.x lives in `~/.opencode/bin`, running
+`chsh -s /usr/bin/zsh` without fixing PATH first removes the entire AI
+toolchain from the shell.
 
 This is invisible if you test with `zsh -ic ...` from an existing fish session,
 because the child process inherits the parent's PATH. Always test with a
@@ -116,9 +117,10 @@ export BUN_INSTALL="$HOME/.bun"
 
 typeset -U path PATH            # keep PATH deduplicated
 path=(
-  "$HOME/.local/bin"            # claude, codex, kiro-cli, pi, herdr
+  "$HOME/.local/bin"            # claude, codex, kiro-cli, pi, herdr, antigravity, jev-gate
   "$HOME/.bun/bin"              # bun, omp
   "$HOME/.npm-global/bin"       # npm global prefix
+  "$HOME/.opencode/bin"         # opencode (upstream installer, v2.x)
   $path
 )
 export PATH
@@ -146,7 +148,7 @@ Do not change the login shell first. Verify, then commit.
 # 1. Patch ~/.zshrc with the PATH block above.
 
 # 2. Prove a fresh login works — not an inherited one.
-for b in claude codex kiro-cli pi herdr bun omp; do
+for b in claude codex kiro-cli pi herdr antigravity jev-gate bun omp opencode; do
   env -i HOME="$HOME" USER="$USER" TERM=xterm /usr/bin/zsh -ic "command -v $b"
 done
 

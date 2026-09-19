@@ -1,6 +1,6 @@
 # 03 — GNOME
 
-Target: **GNOME Shell 50.4 on Wayland** (CachyOS, verified 2026-09-11).
+Target: **GNOME Shell 50.5 on Wayland** (CachyOS, verified 2026-09-19).
 The GNOME version matters more than usual here — see
 [Version constraints](#version-constraints).
 
@@ -22,7 +22,7 @@ sudo pacman -S --needed \
 
 ## Current appearance
 
-Applied state on this workstation (2026-09-11):
+Applied state on this workstation (2026-09-19):
 
 | Layer | Value | Source |
 |---|---|---|
@@ -233,9 +233,9 @@ Any such theme must be regenerated after each GNOME major upgrade.
 
 ## Version constraints
 
-Checked against the extensions.gnome.org API on 2026-09-11:
+Checked against the extensions.gnome.org API on 2026-09-19:
 
-| Extension | Max shell version | Usable on 50.4 |
+| Extension | Max shell version | Usable on 50.5 |
 |---|---|---|
 | Blur my Shell | 50 (v72) | yes |
 | Rounded Window Corners Reborn | 50 (v25) | yes |

@@ -16,6 +16,9 @@ tailscale ip
 tailscale netcheck
 ```
 
+Observed 2026-09-19: `tailscale` 1.102.4, 4-node tailnet (this host + goku
+reachable, 2 offline).
+
 ## Tailscale SSH
 
 If intentionally used:
@@ -49,6 +52,9 @@ address, and only then:
 sudo systemctl enable --now caddy
 sudo ss -lntp | grep caddy        # confirm the bind address, not just "it works"
 ```
+
+Observed 2026-09-19: `caddy` v2.11.4 installed, service `disabled` +
+`inactive` (on-demand only).
 
 A reverse proxy on `0.0.0.0:80` with no authentication in front of a
 development application is the single easiest way to expose this workstation.

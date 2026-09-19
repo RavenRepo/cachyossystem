@@ -8,7 +8,8 @@ Zed (package `zed`, binary `zeditor`):
 sudo pacman -S --needed zed
 ```
 
-VS Code is optional and is **not** installed on this workstation.
+VS Code is installed from the repos on this workstation (`code` 1.138.0,
+extension `anthropic.claude-code`):
 Choose one source if you want it:
 
 ```bash
