@@ -1,0 +1,60 @@
+name: Bug report
+description: A doc is wrong, or a script fails or misbehaves
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. **Do not report security problems here**; use the
+        private [security advisory form](https://github.com/RavenRepo/cachyossystem/security/advisories/new).
+        Remove personal or host-specific details (addresses, hostnames, keys) from anything you paste.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Documentation
+        - Script
+        - verify.sh
+        - README
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: File or phase
+      description: For example `docs/03-gnome.md` or `scripts/02-development.sh`.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ...
+        2. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Output of `fastfetch` or `uname -r` and `gnome-shell --version`.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Logs or error messages, with sensitive details removed.
+      render: shell
