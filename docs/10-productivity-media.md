@@ -30,6 +30,6 @@ Observed 2026-09-19: `obsidian`, `thunderbird` present; `telegram-desktop`
 sudo pacman -S --needed obs-studio kooha ktorrent
 ```
 
-Observed 2026-09-19: `kooha`, `ktorrent` present; `obs-studio` not installed.
+Observed 2026-10-02: `kooha`, `ktorrent`, `obs-studio` (32.2.2) all present.
 
 OBS should be the primary production recorder; Kooha is useful for quick captures.

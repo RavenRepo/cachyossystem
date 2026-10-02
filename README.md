@@ -35,7 +35,7 @@ media tools and everyday productivity — documented, scripted and verifiable.
 ![License](https://img.shields.io/badge/License-MIT-22C55E?logo=opensourceinitiative&logoColor=white)
 ![Maintained](https://img.shields.io/badge/status-actively_maintained-22C55E)
 
-<sub>Verified against GNOME Shell 50.5 on Wayland · last audit 2026-09-19</sub>
+<sub>Verified against GNOME Shell 50.5 on Wayland · last audit 2026-10-02</sub>
 
 </div>
 
@@ -899,10 +899,10 @@ herdr integration install hermes
 
 Only install integrations you actually use.
 
-Observed on this workstation (2026-09-19): `claude` 2.1.278, `codex` 0.155.0,
-`kiro-cli` 2.21.2, `pi` 0.85.1, `herdr` 0.9.0 (all `~/.local/bin` via
-upstream installers), `opencode` v2.0.9 (`~/.opencode/bin` via upstream
-installer), `omp` 18.2.5
+Observed on this workstation (2026-10-02): `claude` 2.1.287, `codex` 0.159.3,
+`kiro-cli` 2.21.2, `pi` 0.87.1, `herdr` 0.9.3 (all `~/.local/bin` via
+upstream installers), `opencode` v2.0.11 (`~/.opencode/bin` via upstream
+installer), `omp` 18.4.4
 (`~/.bun/bin/omp` via Bun), plus `hermes`/`hermes-acp`/`hermes-agent` v0.21.1,
 `antigravity` (IDE v2.13.0, `~/.local/bin`), `agent-memory`, `jev-gate`.
 npm global: `oh-my-claude-sisyphus`, `neon`, `llm-checker`. Bun global:

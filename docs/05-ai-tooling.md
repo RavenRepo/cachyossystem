@@ -2,18 +2,18 @@
 
 AI installers change frequently. Prefer official upstream installation instructions.
 
-Observed on this workstation (2026-09-19):
+Observed on this workstation (2026-10-02):
 
 | Tool | Version | Install source |
 |---|---|---|
-| `claude` | 2.1.278 | upstream installer → `~/.local/bin` |
-| `codex` | 0.155.0 | upstream installer → `~/.local/bin` |
+| `claude` | 2.1.287 | upstream installer → `~/.local/bin` |
+| `codex` | 0.159.3 | upstream installer → `~/.local/bin` |
 | `kiro-cli` | 2.21.2 | upstream installer → `~/.local/bin` |
-| `pi` | 0.85.1 | upstream installer → `~/.local/bin` |
-| `herdr` | 0.9.0 | upstream installer → `~/.local/bin` |
+| `pi` | 0.87.1 | upstream installer → `~/.local/bin` |
+| `herdr` | 0.9.3 | upstream installer → `~/.local/bin` |
 | `hermes`, `hermes-acp`, `hermes-agent` | v0.21.1 | alongside the herdr integrations |
-| `opencode` | v2.0.9 | upstream installer → `~/.opencode/bin` (PATH addition required) |
-| `omp` | 18.2.5 | bun (`~/.bun/bin/omp`) |
+| `opencode` | v2.0.11 | upstream installer → `~/.opencode/bin` (PATH addition required) |
+| `omp` | 18.4.4 | bun (`~/.bun/bin/omp`) |
 | `antigravity` | IDE v2.13.0 | upstream installer → `~/.local/bin` |
 | `agent-memory`, `jev-gate` | — | `~/.local/bin` (Neon memory / Jev risk gate) |
 
