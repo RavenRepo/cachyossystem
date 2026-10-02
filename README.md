@@ -1758,6 +1758,13 @@ Official documentation should take precedence over this repository when software
 
 MIT. See [LICENSE](LICENSE).
 
+# 43. Contributing and community
+
+- [Contributing guide](CONTRIBUTING.md): ground rules, workflow, commit style
+- [Code of Conduct](CODE_OF_CONDUCT.md): Contributor Covenant 2.1
+- [Security policy](SECURITY.md): report vulnerabilities privately, not in public issues
+- Bugs and feature requests: use the [issue templates](https://github.com/RavenRepo/cachyossystem/issues/new/choose)
+
 ---
 
 <div align="center">
