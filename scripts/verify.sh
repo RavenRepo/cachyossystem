@@ -168,6 +168,10 @@ resolve "pi"         pi
 resolve "herdr"      herdr
 resolve "opencode"   opencode
 resolve "omp"        omp
+resolve "antigravity" antigravity --version
+resolve "hermes-agent" hermes-agent
+resolve "jev-gate"   jev-gate
+resolve "agent-memory" agent-memory
 
 c_head "GNOME extension consistency"
 if command -v gsettings >/dev/null; then

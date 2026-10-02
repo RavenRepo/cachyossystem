@@ -13,7 +13,7 @@ media tools and everyday productivity — documented, scripted and verifiable.
 
 <!-- platform -->
 ![CachyOS](https://img.shields.io/badge/OS-CachyOS-1793D1?style=for-the-badge&logo=archlinux&logoColor=white)
-![GNOME](https://img.shields.io/badge/GNOME-50.4-4A86CF?style=for-the-badge&logo=gnome&logoColor=white)
+![GNOME](https://img.shields.io/badge/GNOME-50.5-4A86CF?style=for-the-badge&logo=gnome&logoColor=white)
 ![Wayland](https://img.shields.io/badge/Wayland-native-FFBC00?style=for-the-badge&logo=wayland&logoColor=black)
 ![Catppuccin](https://img.shields.io/badge/Theme-Catppuccin_Mocha-CBA6F7?style=for-the-badge&logo=catppuccin&logoColor=white)
 
@@ -23,7 +23,7 @@ media tools and everyday productivity — documented, scripted and verifiable.
 ![Node.js](https://img.shields.io/badge/Node.js-LTS-5FA04E?logo=nodedotjs&logoColor=white)
 ![Bun](https://img.shields.io/badge/Bun-latest-FBF0DF?logo=bun&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-uv%20%2B%20pipx-3776AB?logo=python&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)
 ![Podman](https://img.shields.io/badge/Podman-rootless-892CA0?logo=podman&logoColor=white)
 ![Neovim](https://img.shields.io/badge/Neovim-tmux-57A143?logo=neovim&logoColor=white)
 
@@ -35,7 +35,7 @@ media tools and everyday productivity — documented, scripted and verifiable.
 ![License](https://img.shields.io/badge/License-MIT-22C55E?logo=opensourceinitiative&logoColor=white)
 ![Maintained](https://img.shields.io/badge/status-actively_maintained-22C55E)
 
-<sub>Verified against GNOME Shell 50.4 on Wayland · last audit 2026-09-11</sub>
+<sub>Verified against GNOME Shell 50.5 on Wayland · last audit 2026-10-02</sub>
 
 </div>
 
@@ -69,7 +69,7 @@ It is designed around:
 - Kooha (+ OBS Studio optional) + KTorrent
 - Obsidian
 - Thunderbird
-- Telegram Desktop
+- Telegram Desktop (`telegram-desktop` package; binary name differs — verify with `pacman -Ql`)
 - SSHFS
 - Modern CLIs: bat, eza, btop, fastfetch, duf, ripgrep, fd, fzf, delta, lazygit, zoxide, go-yq
 - Terminal workflow: neovim, tmux, mosh (for Tailscale SSH sessions)
@@ -144,6 +144,7 @@ Do **not** commit:
 ```text
 cachyos-dev-workstation/
 ├── README.md
+├── CLAUDE.md
 ├── LICENSE
 ├── .gitignore
 ├── docs/
@@ -224,8 +225,8 @@ CachyOS provides multiple desktop environments through its current installer, in
 ## Clone this repository
 
 ```bash
-git clone https://github.com/RavenRepo/cachyossystem.git
-cd cachyossystem
+git clone https://github.com/RavenRepo/cachyos-dev-workstation.git
+cd cachyos-dev-workstation
 ```
 
 ## Run the phases
@@ -898,11 +899,14 @@ herdr integration install hermes
 
 Only install integrations you actually use.
 
-Observed on this workstation (2026-09): `claude` 2.1.268, `codex` 0.153.4,
-`kiro-cli` 2.21.2, `pi` 0.85.1, `herdr` 0.9.0 (all `~/.local/bin` via
-upstream installers), `opencode` 1.18.29 (pacman), `omp` 18.1.17
-(`~/.bun/bin/omp` via Bun), plus `hermes`/`hermes-acp`/`hermes-agent`.
-npm global: `oh-my-claude-sisyphus`. Agent state (`~/.claude/`,
+Observed on this workstation (2026-10-02): `claude` 2.1.287, `codex` 0.159.3,
+`kiro-cli` 2.21.2, `pi` 0.87.1, `herdr` 0.9.3 (all `~/.local/bin` via
+upstream installers), `opencode` v2.0.11 (`~/.opencode/bin` via upstream
+installer), `omp` 18.4.4
+(`~/.bun/bin/omp` via Bun), plus `hermes`/`hermes-acp`/`hermes-agent` v0.21.1,
+`antigravity` (IDE v2.13.0, `~/.local/bin`), `agent-memory`, `jev-gate`.
+npm global: `oh-my-claude-sisyphus`, `neon`, `llm-checker`. Bun global:
+`@oh-my-pi/pi-coding-agent`. Agent state (`~/.claude/`,
 `~/.codex/config.toml`) stays out of Git. Details: `docs/05-ai-tooling.md`.
 
 ---
@@ -1488,12 +1492,14 @@ must be rotated, not merely deleted. Full procedure in `docs/09-security.md`.
 Recommended workspace:
 
 ```text
-~/Projects/
+~/Projects/            # active work (observed 2026-09-19: anatomy, ladder, stuntkit, ...)
 ├── personal/
 ├── work/
 ├── experiments/
 ├── open-source/
 └── archived/
+/mnt/kronos/Projects/  # bulk archive (129 entries observed 2026-09-19)
+/mnt/kronos/jev/        # Jev risk gate (canonical, not a project workspace)
 ```
 
 Example:
@@ -1501,6 +1507,10 @@ Example:
 ```bash
 mkdir -p ~/Projects/{personal,work,experiments,open-source,archived}
 ```
+
+Keep `~/` root clean: `~/main`, `~/src/theming`, `~/postiz`, `~/twenty`,
+`~/researchdoc`, stray `~/package.json` / `~/node_modules` belong under
+`~/Projects/` or `/mnt/kronos/Projects/`.
 
 A typical project:
 

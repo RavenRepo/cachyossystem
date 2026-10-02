@@ -1,6 +1,6 @@
 # 03 — GNOME
 
-Target: **GNOME Shell 50.4 on Wayland** (CachyOS, verified 2026-09-11).
+Target: **GNOME Shell 50.5 on Wayland** (CachyOS, verified 2026-09-19).
 The GNOME version matters more than usual here — see
 [Version constraints](#version-constraints).
 
@@ -17,12 +17,16 @@ sudo pacman -S --needed \
   nautilus \
   file-roller \
   xdg-user-dirs \
-  gnome-extensions-app
+  extension-manager
 ```
+
+`gnome-extensions-app` is not a package on current CachyOS/GNOME releases — the
+`gnome-extensions` CLI ships inside `gnome-shell` itself, and the actual GUI
+manager is `extension-manager` (referenced below).
 
 ## Current appearance
 
-Applied state on this workstation (2026-09-11):
+Applied state on this workstation (2026-09-19):
 
 | Layer | Value | Source |
 |---|---|---|
@@ -233,9 +237,9 @@ Any such theme must be regenerated after each GNOME major upgrade.
 
 ## Version constraints
 
-Checked against the extensions.gnome.org API on 2026-09-11:
+Checked against the extensions.gnome.org API on 2026-09-19:
 
-| Extension | Max shell version | Usable on 50.4 |
+| Extension | Max shell version | Usable on 50.5 |
 |---|---|---|
 | Blur my Shell | 50 (v72) | yes |
 | Rounded Window Corners Reborn | 50 (v25) | yes |
@@ -277,7 +281,7 @@ with Extension Manager (`extension-manager`), which installs from
 extensions.gnome.org. Do not install extensions or themes from arbitrary
 gnome-look.org tarballs.
 
-Enabled on this workstation:
+Enabled on this workstation (observed 2026-10-02):
 
 ```text
 dash-to-dock@micxgx.gmail.com
@@ -288,7 +292,13 @@ gsconnect@andyholmes.github.io
 CoverflowAltTab@palatis.blogspot.com
 tilingshell@ferrarodomenico.com
 just-perfection-desktop@just-perfection
+auto-move-windows@gnome-shell-extensions.gcampax.github.com
+places-menu@gnome-shell-extensions.gcampax.github.com
 ```
+
+`auto-move-windows` and `places-menu` are bundled with `gnome-shell` itself
+(not installed separately) and got enabled since the last audit; keep them
+only if they're actually in use, otherwise disable to keep the set minimal.
 
 Installed but not active: `dash-in-panel@fthx`.
 

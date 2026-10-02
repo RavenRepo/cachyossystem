@@ -129,6 +129,22 @@ file, or a Git object as compromised and rotate it. Removing the line does not
 un-leak it: it stays in `~/.bash_history`, in shell session logs, and in Git
 history if it was ever committed.
 
+On 2026-09-19 `scripts/verify.sh` failed again on an inline
+`export <NAME>_API_KEY=<redacted>` in `~/.zshrc` plus a key-named file in
+`~/`. Same rule applies: rotate, remove the line/file, clear history.
+
+### Jev risk gate (canonical `/mnt/kronos/jev`)
+
+Before ambiguous, risky, destructive, or irreversible actions (deletes,
+deploys, merges, schema/prod writes, mass edits), run:
+
+```bash
+jev-gate --request "<task>"
+```
+
+Exit 0 = proceed, exit 3 = escalate to user. Never print or store
+`TYPESAFE_API_KEY`; source `/mnt/kronos/jev/.env` silently.
+
 ## No AppArmor
 
 This baseline intentionally does not install or configure AppArmor.

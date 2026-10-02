@@ -2,7 +2,8 @@
 
 ## PostgreSQL
 
-Keep the database local by default.
+Keep the database local by default. Observed 2026-09-19: 18.6,
+`postgresql.service` enabled + active.
 
 ```bash
 systemctl status postgresql --no-pager
